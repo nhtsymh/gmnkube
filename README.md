@@ -185,7 +185,7 @@ The repository includes workload-generation and schedule-history utilities corre
 | Area | Technology |
 | --- | --- |
 | Language | Python 3.11 |
-| Learning framework | TensorFlow / Keras, NumPy |
+| Learning framework | TensorFlow / Keras, NumPy, Pytorch|
 | API layer | Sanic, Hypercorn, sanic-cors |
 | State store | etcd |
 | Container runtime | containerd and `ctr` |
