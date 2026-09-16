@@ -81,6 +81,15 @@ All strategies operate on the same node and Pod abstractions, allowing schedulin
 
 ## DDQN Scheduling Model
 
+### Implementations
+
+The learning-based scheduler is available in two implementations:
+
+- **TensorFlow/Keras:** the original implementation in `orchestrator/DDQN_scheduler.py`.
+- **PyTorch:** a reference port in `orchestrator/DDQN_scheduler_pytorch.py` that preserves the same Q-network architecture, state/action representation, replay-memory workflow, target-network updates, and scheduler interface.
+
+The original TensorFlow/Keras implementation remains the basis of the historical experiments reported in this repository; the PyTorch port is provided for reproduction and further extension.
+
 ### State
 
 For each node, the scheduler constructs a nine-dimensional feature vector:
@@ -185,7 +194,7 @@ The repository includes workload-generation and schedule-history utilities corre
 | Area | Technology |
 | --- | --- |
 | Language | Python 3.11 |
-| Learning framework | TensorFlow / Keras, NumPy, Pytorch|
+| Learning framework | TensorFlow / Keras (original), PyTorch (reference port), NumPy |
 | API layer | Sanic, Hypercorn, sanic-cors |
 | State store | etcd |
 | Container runtime | containerd and `ctr` |
@@ -230,7 +239,7 @@ Install the runtime packages used by the scheduling, API, persistence, and telem
 
 ```bash
 pip install sanic sanic-cors sanic-testing hypercorn \
-  pyyaml requests numpy tensorflow matplotlib \
+  pyyaml requests numpy tensorflow torch matplotlib \
   etcd3 protobuf==3.20.1 psutil GPUtil pytest
 ```
 
@@ -382,6 +391,7 @@ gmnkube/
 │   └── node_controller.py
 ├── orchestrator/
 │   ├── DDQN_scheduler.py
+│   ├── DDQN_scheduler_pytorch.py
 │   ├── kube_scheduler.py
 │   ├── kube_scheduler_plus.py
 │   ├── scheduler_random.py
@@ -392,6 +402,7 @@ gmnkube/
 ├── tests/
 │   ├── system_tester.py
 │   ├── test_DDQN_scheduler.py
+│   ├── test_DDQN_scheduler_pytorch.py
 │   ├── test_env.py
 │   ├── test_kube_scheduler_plus.py
 │   └── ...
